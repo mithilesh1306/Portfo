@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mithilesh B - ECE Student & Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --dark-navy: #111111;
+            --navy: #1d1d1d;
+            --light-navy: #2a2a2a;
+            --slate: #BDBDBD;
+            --light-slate: #E0E0E0;
+            --lightest-slate: #FFFFFF;
+            --accent: #FF6347; /* Brighter reddish-orange (Tomato) */
+            --accent-tint: rgba(255, 99, 71, 0.1); /* Brighter reddish-orange tint */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-navy);
+            color: var(--slate);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--dark-navy);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--slate);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--light-slate);
+        }
+
+        .accent-text { color: var(--accent); }
+        .bg-accent { background-color: var(--accent); }
+        .border-accent { border-color: var(--accent); }
+
+        .btn-primary {
+            @apply px-6 py-3 font-semibold bg-accent text-dark-navy rounded-lg transition-all duration-300 ease-in-out;
+        }
+        .btn-primary:hover {
+            @apply shadow-lg brightness-110;
+            box-shadow: 0 10px 15px -3px var(--accent-tint), 0 4px 6px -2px var(--accent-tint);
+        }
+        
+        .btn-send {
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-send:hover {
+            filter: brightness(110%);
+            box-shadow: 0 10px 15px -3px var(--accent-tint), 0 4px 6px -2px var(--accent-tint);
+        }
+
+        .btn-resume {
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-resume:hover {
+            filter: brightness(110%);
+            box-shadow: 0 10px 15px -3px var(--accent-tint), 0 4px 6px -2px var(--accent-tint);
+        }
+
+        .section-heading {
+            @apply text-3xl md:text-4xl font-bold text-white mb-10 flex items-center whitespace-nowrap;
+        }
+        .section-heading::after {
+            content: '';
+            @apply block h-px w-full bg-light-navy ml-4;
+        }
+        
+        /* Glassmorphism Header */
+        header {
+            background-color: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-link {
+            @apply text-white transition-colors duration-300 font-bold;
+        }
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        /* Particle JS canvas */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .project-card {
+            @apply bg-light-navy rounded-lg shadow-lg transition-all duration-300;
+        }
+        .project-card:hover {
+            @apply transform -translate-y-2;
+            box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-tint);
+        }
+        
+        .project-image-container {
+            @apply relative overflow-hidden rounded-t-lg;
+        }
+        .project-image-container img {
+            @apply transition-transform duration-500 ease-in-out;
+        }
+        .project-card:hover .project-image-container img {
+            @apply transform scale-105;
+        }
+        .project-overlay {
+            @apply absolute inset-0 bg-navy bg-opacity-70 transition-opacity duration-300 opacity-100;
+        }
+        .project-card:hover .project-overlay {
+            @apply opacity-0;
+        }
+
+        /* Skill box hover effect */
+        .skill-box {
+            @apply bg-light-navy p-6 rounded-lg border-2 border-transparent transition-all duration-300 ease-in-out;
+        }
+        .skill-box:hover {
+            @apply border-accent transform -translate-y-2;
+        }
+
+        /* Animation Classes */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Tilt animation for glowing effect */
+        @keyframes tilt {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(1deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-1deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .animate-tilt {
+            animation: tilt 10s infinite linear;
+        }
+        
+        .form-input {
+            width: 100%;
+            background-color: var(--light-navy); /* Greyish background */
+            color: var(--lightest-slate); /* White text */
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            border: 1px solid var(--navy);
+            transition: all 0.3s ease-in-out;
+            font-size: 1rem;
+        }
+
+        .form-input::placeholder {
+            color: var(--slate); /* Slightly lighter placeholder */
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-tint), 0 0 5px var(--accent);
+            background-color: var(--light-navy);
+            color: var(--lightest-slate);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-5 flex justify-between items-center max-w-7xl">
+            <a href="#" class="text-2xl font-black accent-text">MB</a>
+            <nav class="hidden md:flex items-center space-x-8 text-sm">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Project</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#" class="btn-resume">
+                    <span>RESUME</span>
+                    <i data-lucide="download" class="h-4 w-4"></i>
+                </a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+              <a href="#hero" class="block py-2 nav-link">Home</a>
+              <a href="#about" class="block py-2 nav-link">About</a>
+            <a href="#projects" class="block py-2 nav-link">Project</a>
+            <a href="#contact" class="block py-2 nav-link">Contact</a>
+            <a href="#" class="mt-2 btn-resume w-full justify-center">
+                <span>RESUME</span>
+                <i data-lucide="download" class="h-4 w-4"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 max-w-7xl">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center items-start relative -mx-6 px-6">
+            <div id="particles-js"></div>
+            <div class="max-w-3xl z-10">
+                <p class="accent-text text-lg mb-4 fade-up" style="color:white">Hi, my name is</p>
+                <h1 class="text-5xl md:text-7xl font-bold text-white fade-up" style="transition-delay: 100ms;">Mithilesh B.</h1>
+                <h2 class="text-4xl md:text-6xl font-bold accent-text mt-3 fade-up" style="transition-delay: 200ms;">I build solutions for the web.</h2>
+                <p class="mt-6 max-w-xl text-lg fade-up" style="transition-delay: 300ms;">
+                    I'm a second-year ECE student with a passion for software development, specializing in creating robust web applications with Java and modern front-end technologies.
+                </p>
+                <div class="mt-8 fade-up" style="transition-delay: 400ms;">
+                    <a href="#projects" class="btn-primary">Check out my work!</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-24 fade-up">
+            <h2 class="section-heading">About Me</h2>
+            <div class="grid md:grid-cols-5 gap-12 items-center">
+                <div class="md:col-span-3 text-lg text-light-slate">
+                    <p class="mb-4">
+                        Hello! I'm Mithilesh, an Electronics and Communication Engineering student based in India. My journey into technology began in my first year of college, and I've been captivated by web development ever since. What started with a simple "Hello, World!" has grown into a passion for building dynamic and user-friendly web applications.
+                    </p>
+                    <p class="mb-4">
+                        My ECE coursework provides a strong foundation in logic and problem-solving, which I apply to my software projects. I enjoy the entire development process, from designing a <span class="accent-text text-white">MySQL</span> database to creating interactive UIs with <span class="accent-text text-white">JavaScript</span> and handling server-side logic with <span class="accent-text text-white">Core Java, JSP, and Hibernate</span>.
+                    </p>
+                    <p>
+                        When I'm not coding, I explore new technologies, contribute to open-source, and learn about cloud platforms like <span class="accent-text text-white">Firebase</span>. I'm eager to apply my skills to real-world challenges.
+                    </p>
+                </div>
+                <div class="md:col-span-2 flex justify-center">
+                    <div class="w-64 h-64 rounded-lg relative group">
+                        <div class="absolute -inset-0.5 bg-accent rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                        <img src="https://placehold.co/400x400/111111/FF6347?text=MB" alt="Mithilesh B" class="relative w-full h-full object-cover rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 fade-up">
+            <h2 class="section-heading">What I Do</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="skill-box fade-up">
+                    <i data-lucide="layout-template" class="accent-text mb-4 h-10 w-10"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Frontend Development</h3>
+                    <p class="text-sm">I build responsive and interactive user interfaces using HTML, CSS, Bootstrap, and JavaScript.</p>
+                </div>
+                <div class="skill-box fade-up" style="transition-delay: 100ms;">
+                    <i data-lucide="server" class="accent-text mb-4 h-10 w-10"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Backend Development</h3>
+                    <p class="text-sm">I develop robust server-side applications and APIs with Core Java, JSP, JDBC, and Hibernate.</p>
+                </div>
+                <div class="skill-box fade-up" style="transition-delay: 200ms;">
+                    <i data-lucide="database" class="accent-text mb-4 h-10 w-10"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Database Management</h3>
+                    <p class="text-sm">I design and manage efficient databases using MySQL and integrate them with cloud solutions like Firebase.</p>
+                </div>
+            </div>
+                 <h3 class="text-2xl font-bold text-white mt-16 mb-6 text-center">My Technology Stack</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">HTML</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">CSS</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">Bootstrap</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">JavaScript</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">Core Java</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">JDBC</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">JSP</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">Hibernate</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">Git & GitHub</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">MySQL</span>
+                <span class="bg-slate-800 text-sm py-2 px-4 rounded-full">Firebase</span>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 fade-up">
+            <h2 class="section-heading">Things I've Built</h2>
+            <!-- The project cards will be dynamically inserted here by JavaScript -->
+            <div id="projects-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 fade-up">
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Left Column: Form -->
+                <div>
+                    <h3 class="text-3xl font-bold text-white mb-6">Contact Me</h3>
+                    <form id="contact-form" action="https://formspree.io/f/YOUR_UNIQUE_FORM_ID" method="POST">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <input type="text" name="name" placeholder="Name" required class="form-input">
+                            <input type="email" name="email" placeholder="Email" required class="form-input">
+                        </div>
+                        <div class="mb-4">
+                             <input type="text" name="subject" placeholder="Subject" required class="form-input">
+                        </div>
+                        <div class="mb-4">
+                            <textarea name="message" rows="7" placeholder="Message" required class="form-input"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn-send">
+                                <span>SEND ></span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="form-status" class="mt-4 text-white"></div>
+                </div>
+                <!-- Right Column: Info -->
+                <div class="md:pl-10">
+                    <h3 class="text-3xl font-bold text-white mb-6">Get In Touch</h3>
+                    <div class="space-y-6">
+                        <h4 class="text-xl font-bold text-white border-b border-light-navy pb-2">CONTACT INFO</h4>
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="user" class="accent-text h-6 w-6"></i>
+                            <span class="text-light-slate">MITHILESH B</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="phone" class="accent-text h-6 w-6"></i>
+                            <a href="tel:0000000000" class="text-light-slate hover:text-accent transition-colors">+91 87543 28542</a>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="mail" class="accent-text h-6 w-6"></i>
+                            <a href="mailto:mithileshvasanth024@gmail.com" class="text-light-slate hover:text-accent transition-colors">mithileshvasanth024@gmail.com</a>
+                        </div>
+                        <h4 class="text-xl font-bold text-white border-b border-light-navy pb-2 pt-6">SOCIAL</h4>
+                        <div class="flex items-center space-x-4">
+                            <a href="#" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="github" class="h-8 w-8"></i></a>
+                            <a href="#" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="linkedin" class="h-8 w-8"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-sm text-slate">
+        <p>Designed & Built by Mithilesh B</p>
+    </footer>
+
+    <!-- Particle.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- All custom JavaScript logic -->
+    <script>
+        // Wait for the entire page to load before running any scripts
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- DATA ---
+            const projects = [
+                {
+                    image: "https://placehold.co/600x400/1d1d1d/ffffff?text=E-Commerce+App",
+                    title: "E-Commerce Platform",
+                    description: "A full-featured e-commerce site with user authentication, product catalog, and a shopping cart, built with a robust Java backend.",
+                    tags: ["Java", "JSP", "MySQL"],
+                    githubUrl: "#",
+                    liveUrl: "#"
+                },
+                {
+                    image: "https://placehold.co/600x400/1d1d1d/ffffff?text=Task+Manager",
+                    title: "Task Management App",
+                    description: "A responsive task manager with real-time updates using Firebase, allowing users to create, track, and manage their daily tasks.",
+                    tags: ["JavaScript", "Bootstrap", "Firebase"],
+                    githubUrl: "#",
+                    liveUrl: "#"
+                },
+                {
+                    image: "https://placehold.co/600x400/1d1d1d/ffffff?text=Blogging+Platform",
+                    title: "Blogging Platform API",
+                    description: "A RESTful API for a blogging platform using Hibernate for object-relational mapping, enabling efficient data management.",
+                    tags: ["Java", "Hibernate", "MySQL"],
+                    githubUrl: "#",
+                    liveUrl: "#"
+                }
+            ];
+
+            // --- INITIALIZATION ---
+            function init() {
+                loadProjects();
+                initMobileMenu();
+                initSmoothScroll();
+                initScrollAnimations();
+                initParticles();
+                initContactForm();
+                // Lucide icons need to be created AFTER the dynamic content (projects) is loaded
+                lucide.createIcons();
+            }
+
+            // --- FUNCTIONS ---
+            function loadProjects() {
+                const container = document.getElementById('projects-container');
+                if (!container) return;
+                let projectsHTML = '';
+                projects.forEach((project, index) => {
+                    projectsHTML += `
+                        <div class="project-card fade-up" style="transition-delay: ${index * 100}ms;">
+                            <div class="project-image-container">
+                                <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover">
+                                <div class="project-overlay"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">${project.title}</h3>
+                                <p class="text-sm mb-4">${project.description}</p>
+                                <div class="flex items-center space-x-4 text-xs font-mono accent-text">
+                                    ${project.tags.map(tag => `<span>${tag}</span>`).join('')}
+                                </div>
+                                <div class="mt-4 flex space-x-4">
+                                    <a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="github"></i></a>
+                                    <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = projectsHTML;
+            }
+
+            function initMobileMenu() {
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', () => {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+            }
+
+            function initSmoothScroll() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(this.getAttribute('href'));
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    });
+                });
+            }
+
+            function initScrollAnimations() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.fade-up').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+            
+            function initContactForm() {
+                const form = document.getElementById('contact-form');
+                if (form) {
+                    form.addEventListener('submit', handleFormSubmit);
+                }
+            }
+
+            async function handleFormSubmit(event) {
+                event.preventDefault();
+                const form = event.target;
+                const status = document.getElementById('form-status');
+                const button = form.querySelector('button');
+                
+                // ACTION REQUIRED: Replace the placeholder URL with your Formspree URL
+                if (form.action.includes("YOUR_UNIQUE_FORM_ID")) {
+                    status.textContent = "Please update the form action URL in the HTML.";
+                    status.style.color = "var(--accent)";
+                    return;
+                }
+
+                status.textContent = 'Sending...';
+                status.style.color = "var(--light-slate)";
+                button.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: new FormData(form),
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        status.textContent = 'Thanks for your message!';
+                        status.style.color = "lightgreen";
+                        form.reset();
+                    } else {
+                        status.textContent = 'Oops! There was a problem submitting your form.';
+                        status.style.color = "var(--accent)";
+                    }
+                } catch (error) {
+                    status.textContent = 'Oops! There was a problem submitting your form.';
+                    status.style.color = "var(--accent)";
+                } finally {
+                    button.disabled = false;
+                }
+            }
+
+            function initParticles() {
+                if (typeof particlesJS !== 'undefined') {
+                    particlesJS('particles-js', {
+                        "particles": {
+                            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                            "color": { "value": "#FF6347" },
+                            "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } },
+                            "opacity": { "value": 0.5, "random": false, "anim": { "enable": false } },
+                            "size": { "value": 3, "random": true, "anim": { "enable": false } },
+                            "line_linked": { "enable": true, "distance": 150, "color": "#BDBDBD", "opacity": 0.4, "width": 1 },
+                            "move": { "enable": true, "speed": 4, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+                        },
+                        "interactivity": {
+                            "detect_on": "canvas",
+                            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                            "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8 }, "repulse": { "distance": 200 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } }
+                        },
+                        "retina_detect": true
+                    });
+                }
+            }
+            
+            // --- START THE APP ---
+            init();
+        });
+    </script>
+</body>
+</html>
