@@ -124,22 +124,6 @@
             @apply transform -translate-y-2;
             box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-tint);
         }
-        
-        .project-image-container {
-            @apply relative overflow-hidden rounded-t-lg;
-        }
-        .project-image-container img {
-            @apply transition-transform duration-500 ease-in-out;
-        }
-        .project-card:hover .project-image-container img {
-            @apply transform scale-105;
-        }
-        .project-overlay {
-            @apply absolute inset-0 bg-navy bg-opacity-70 transition-opacity duration-300 opacity-100;
-        }
-        .project-card:hover .project-overlay {
-            @apply opacity-0;
-        }
 
         /* Skill box hover effect */
         .skill-box {
@@ -348,8 +332,8 @@
                         </div>
                         <h4 class="text-xl font-bold text-white border-b border-light-navy pb-2 pt-6">SOCIAL</h4>
                         <div class="flex items-center space-x-4">
-                             <a href="https://github.com/your-username" target="_blank" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="github" class="h-8 w-8"></i></a>
-                             <a href="https://linkedin.com/in/your-profile" target="_blank" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="linkedin" class="h-8 w-8"></i></a>
+                            <a href="https://github.com/mithilesh1306" target="_blank" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="github" class="h-8 w-8"></i></a>
+                            <a href="https://www.linkedin.com/in/mithilesh-b-82995432b" target="_blank" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="linkedin" class="h-8 w-8"></i></a>
                         </div>
                     </div>
                 </div>
@@ -368,32 +352,24 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- DATA ---
-            // ACTION: Update this section with your real project details.
-            // Upload screenshots of your projects and replace the image URLs.
             const projects = [
                 {
-                    image: "https://placehold.co/600x400/1d1d1d/ffffff?text=E-Commerce+App", // Replace with your image path
-                    title: "E-Commerce Platform",
-                    description: "A full-featured e-commerce site with user authentication, product catalog, and a shopping cart, built with a robust Java backend.",
-                    tags: ["Java", "JSP", "MySQL"],
-                    githubUrl: "https://github.com/your-username/ecommerce-project", // Replace with your repo link
-                    liveUrl: "#" // Replace with your live demo link, or remove if not applicable
+                    title: "Library Management System",
+                    description: "A full-stack web application for libraries to manage their book catalog and user check-outs/returns. Built with a Java (JSP/Servlet) backend and a MySQL database.",
+                    tags: ["Java", "JSP", "Servlet", "MySQL", "JDBC"],
+                    githubUrl: "https://github.com/mithilesh1306/Library_ManagementSystem"
                 },
                 {
-                    image: "https://placehold.co/600x400/1d1d1d/ffffff?text=Task+Manager", // Replace with your image path
-                    title: "Task Management App",
-                    description: "A responsive task manager with real-time updates using Firebase, allowing users to create, track, and manage their daily tasks.",
-                    tags: ["JavaScript", "Bootstrap", "Firebase"],
-                    githubUrl: "https://github.com/your-username/task-manager-project", // Replace with your repo link
-                    liveUrl: "#" // Replace with your live demo link
+                    title: "Real-Time Power Monitoring Dashboard",
+                    description: "A web dashboard built with JavaScript to display live power consumption data from a Google Firebase Realtime Database, featuring secure user authentication.",
+                    tags: ["JavaScript", "Firebase", "HTML/CSS", "Netlify"],
+                    githubUrl: "https://github.com/mithilesh1306/power-monitoring"
                 },
                 {
-                    image: "https://placehold.co/600x400/1d1d1d/ffffff?text=Blogging+Platform", // Replace with your image path
-                    title: "Blogging Platform API",
-                    description: "A RESTful API for a blogging platform using Hibernate for object-relational mapping, enabling efficient data management.",
-                    tags: ["Java", "Hibernate", "MySQL"],
-                    githubUrl: "https://github.com/your-username/blog-api-project", // Replace with your repo link
-                    liveUrl: "#" // No live URL for an API, so '#' is fine
+                    title: "Hibernate CRUD Application",
+                    description: "A command-line app demonstrating backend data management (CRUD) using Java and the Hibernate ORM framework to connect with a MySQL database.",
+                    tags: ["Java", "Hibernate", "MySQL", "Maven"],
+                    githubUrl: "https://github.com/mithilesh1306/Hibernate-Crud"
                 }
             ];
 
@@ -405,7 +381,6 @@
                 initScrollAnimations();
                 initParticles();
                 initContactForm();
-                lucide.createIcons();
             }
 
             // --- FUNCTIONS ---
@@ -415,26 +390,22 @@
                 let projectsHTML = '';
                 projects.forEach((project, index) => {
                     projectsHTML += `
-                        <div class="project-card fade-up" style="transition-delay: ${index * 100}ms;">
-                            <div class="project-image-container">
-                                <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover">
-                                <div class="project-overlay"></div>
+                        <div class="project-card fade-up p-6" style="transition-delay: ${index * 100}ms;">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-white">${project.title}</h3>
+                                <a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" title="View Case Study on GitHub" class="text-slate hover:text-accent transition-colors duration-300">
+                                    <i data-lucide="arrow-up-right-square"></i>
+                                </a>
                             </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">${project.title}</h3>
-                                <p class="text-sm mb-4">${project.description}</p>
-                                <div class="flex items-center space-x-4 text-xs font-mono accent-text">
-                                    ${project.tags.map(tag => `<span>${tag}</span>`).join('')}
-                                </div>
-                                <div class="mt-4 flex space-x-4">
-                                    <a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="github"></i></a>
-                                    <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="text-slate hover:text-accent transition-colors duration-300"><i data-lucide="external-link"></i></a>
-                                </div>
+                            <p class="text-sm mb-4">${project.description}</p>
+                            <div class="flex flex-wrap gap-2 text-xs font-mono accent-text">
+                                ${project.tags.map(tag => `<span>${tag}</span>`).join('')}
                             </div>
                         </div>
                     `;
                 });
                 container.innerHTML = projectsHTML;
+                lucide.createIcons();
             }
 
             function initMobileMenu() {
@@ -490,12 +461,6 @@
                 const status = document.getElementById('form-status');
                 const button = form.querySelector('button');
                 
-                if (form.action.includes("YOUR_UNIQUE_FORM_ID")) {
-                    status.textContent = "Please update the form's action URL in the HTML.";
-                    status.style.color = "var(--accent)";
-                    return;
-                }
-
                 status.textContent = 'Sending...';
                 status.style.color = "var(--light-slate)";
                 button.disabled = true;
@@ -531,20 +496,8 @@
             function initParticles() {
                 if (typeof particlesJS !== 'undefined') {
                     particlesJS('particles-js', {
-                        "particles": {
-                            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                            "color": { "value": "#FF6347" },
-                            "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } },
-                            "opacity": { "value": 0.5, "random": false, "anim": { "enable": false } },
-                            "size": { "value": 3, "random": true, "anim": { "enable": false } },
-                            "line_linked": { "enable": true, "distance": 150, "color": "#BDBDBD", "opacity": 0.4, "width": 1 },
-                            "move": { "enable": true, "speed": 4, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-                        },
-                        "interactivity": {
-                            "detect_on": "canvas",
-                            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
-                            "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8 }, "repulse": { "distance": 200 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } }
-                        },
+                        "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#FF6347" }, "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } }, "opacity": { "value": 0.5, "random": false, "anim": { "enable": false } }, "size": { "value": 3, "random": true, "anim": { "enable": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#BDBDBD", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 4, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }},
+                        "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8 }, "repulse": { "distance": 200 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } }},
                         "retina_detect": true
                     });
                 }
